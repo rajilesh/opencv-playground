@@ -2,8 +2,8 @@
 
 A beautiful and interactive Streamlit application to explore and apply OpenCV image processing methods in real-time.
 
-![OpenCV Playground](https://img.shields.io/badge/OpenCV-Playground-blue?style=for-the-badge&logo=opencv)
-![Streamlit](https://img.shields.io/badge/Streamlit-App-red?style=for-the-badge&logo=streamlit)
+
+![Demo](https://opencv-playground.streamlit.app/)
 
 ## ✨ Features
 

@@ -5,6 +5,8 @@ A beautiful and interactive Streamlit application to explore and apply OpenCV im
 
 [![Streamlit App](https://img.shields.io/badge/Streamlit-App-red?style=for-the-badge&logo=streamlit)](https://opencv-playground.streamlit.app/)
 
+![App Screenshot](Screenshot-01.png)
+
 ## ✨ Features
 
 - **50+ OpenCV Methods** - Comprehensive collection of image processing techniques

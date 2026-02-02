@@ -246,6 +246,23 @@ st.markdown("""
         background: #dc3545;
     }
     
+    /* Pipeline row buttons - Streamlit specific */
+    .pipeline-row .stButton > button {
+        padding: 4px 8px !important;
+        min-height: 32px !important;
+        width: 32px !important;
+        font-size: 14px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    .pipeline-row [data-testid="column"] {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
     /* Drag handle */
     .drag-handle {
         color: #999;
@@ -1427,29 +1444,40 @@ with left_col:
             unique_key = f"{effect['id']}_{idx}"
             
             with st.container():
-                st.markdown(f"""
-                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                    <span class="pipeline-number">{idx + 1}</span>
-                    <span style="font-weight: 500; font-size: 13px;">{category_icon} {effect['method']}</span>
-                </div>
-                """, unsafe_allow_html=True)
+                # Apply pipeline-row class for styling
+                st.markdown('<div class="pipeline-row">', unsafe_allow_html=True)
                 
-                btn_col1, btn_col2, btn_col3, btn_col4 = st.columns(4)
-                with btn_col1:
+                # Single row: number + name, then action buttons
+                cols = st.columns([4, 1, 1, 1, 1])
+                
+                with cols[0]:
+                    st.markdown(f"""
+                    <div style="display: flex; align-items: center; gap: 8px; height: 32px; padding-top: 4px;">
+                        <span class="pipeline-number">{idx + 1}</span>
+                        <span style="font-weight: 500; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{category_icon} {effect['method']}</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+                
+                with cols[1]:
                     if idx > 0:
                         st.button("↑", key=f"up_{unique_key}", help="Move up", 
                                   on_click=move_effect_up, args=(idx,))
-                with btn_col2:
+                
+                with cols[2]:
                     if idx < len(st.session_state.effect_pipeline) - 1:
                         st.button("↓", key=f"down_{unique_key}", help="Move down",
                                   on_click=move_effect_down, args=(idx,))
-                with btn_col3:
+                
+                with cols[3]:
                     edit_icon = "✓" if is_editing else "✎"
                     st.button(edit_icon, key=f"edit_{unique_key}", help="Edit",
                               on_click=toggle_edit_effect, args=(effect['id'],))
-                with btn_col4:
+                
+                with cols[4]:
                     st.button("×", key=f"remove_{unique_key}", help="Remove",
                               on_click=remove_effect, args=(idx, effect['id']))
+                
+                st.markdown('</div>', unsafe_allow_html=True)
                 
                 if is_editing:
                     with st.expander("Edit Effect", expanded=True):
